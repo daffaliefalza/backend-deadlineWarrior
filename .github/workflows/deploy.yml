@@ -25,6 +25,7 @@ jobs:
       - name: Remove old app.zip
         run: rm -rf app.zip
 
+
       - name: Archive project
         run: zip -r app.zip . -x "*.git*" "node_modules/*" ".github/*"
 
@@ -48,10 +49,10 @@ jobs:
           script: |
             set -e
             cd ~
-            rm -rf backend-deadlineWarrior
+            rm -rf backend
             sudo apt install -y unzip
-            unzip -o app.zip -d backend-deadlineWarrior
-            cd backend-deadlineWarrior
+            unzip -o app.zip -d backend
+            cd backend
             cat <<EOF> .env
             JWT_SECRET_KEY= '${{ secrets.JWT_SECRET_KEY }}'
             GOOGLE_APP_PASSWORD= '${{ secrets.GOOGLE_APP_PASSWORD }}'
@@ -67,4 +68,4 @@ jobs:
             sudo npm ci
             sudo npm i -g pm2
             pm2 delete all || true
-            pm2 start index.js --name backend-deadlineWarrior           
+            pm2 start index.js --name backend         
